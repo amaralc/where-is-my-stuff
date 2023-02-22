@@ -23,10 +23,22 @@ export class PrismaMongoDbUsersDatabaseRepository
       );
     }
 
-    const prismaUser = await this.prismaDatabaseMongoDbService.users.create({
-      data: { email },
-    });
-    const applicationUser = new User({ email: prismaUser.email });
+    console.log(userExists);
+    try {
+      const prismaUser = await this.prismaDatabaseMongoDbService.users.create({
+        data: {
+          email: 'email@a.c',
+        },
+      });
+      console.log(prismaUser);
+    } catch (e) {
+      console.log(e);
+    }
+
+    // const prismaUser = await this.prismaDatabaseMongoDbService.users.create({
+    //   data: { email },
+    // });
+    const applicationUser = new User({ email: 'a@e.c' });
     return applicationUser;
   }
 

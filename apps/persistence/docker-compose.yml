@@ -74,6 +74,7 @@ services:
   mongo:
     image: mongo:5.0
     restart: always
+    command: --replSet rs0 # Use as replica set (https://github.com/prisma/prisma/issues/8266#issuecomment-966618742)
     container_name: mongo
     ports:
       - '27017:27017'
