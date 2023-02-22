@@ -1,14 +1,18 @@
 // users.repository.ts
 import { ConflictException, Injectable } from '@nestjs/common';
-import { PrismaService } from '../../../../../infra/storage/prisma/prisma.service';
+import { PrismaDatabaseMongoDbService } from '../../../../../infra/database/prisma/implementations/prisma-mongodb.service';
 import { CreateUserDto } from '../../../dto/create-user.dto';
 import { User } from '../../../entities/user.entity';
 import { USERS_ERROR_MESSAGES } from '../../../errors/error-messages';
 import { UsersDatabaseRepository } from '../database.repository';
 
 @Injectable()
-export class PrismaUsersDatabaseRepository implements UsersDatabaseRepository {
-  constructor(private prismaService: PrismaService) {}
+export class PrismaMongoDbUsersDatabaseRepository
+  implements UsersDatabaseRepository
+{
+  constructor(
+    private prismaDatabaseMongoDbService: PrismaDatabaseMongoDbService
+  ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const { email } = createUserDto;
@@ -19,7 +23,7 @@ export class PrismaUsersDatabaseRepository implements UsersDatabaseRepository {
       );
     }
 
-    const prismaUser = await this.prismaService.users.create({
+    const prismaUser = await this.prismaDatabaseMongoDbService.users.create({
       data: { email },
     });
     const applicationUser = new User({ email: prismaUser.email });
@@ -27,7 +31,7 @@ export class PrismaUsersDatabaseRepository implements UsersDatabaseRepository {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const prismaUser = await this.prismaService.users.findFirst({
+    const prismaUser = await this.prismaDatabaseMongoDbService.users.findFirst({
       where: {
         email,
       },
@@ -41,7 +45,8 @@ export class PrismaUsersDatabaseRepository implements UsersDatabaseRepository {
   }
 
   async findAll() {
-    const prismaUsers = await this.prismaService.users.findMany();
+    const prismaUsers =
+      await this.prismaDatabaseMongoDbService.users.findMany();
     const applicationUsers = prismaUsers.map(
       (user) => new User({ email: user.email })
     );

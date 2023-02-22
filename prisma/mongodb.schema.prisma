@@ -1,4 +1,25 @@
 datasource db {
   provider = "mongodb"
-  url      = env("DATABASE_URL")
+  url      = env("MONGODB_DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/mongodb"
+}
+
+model users {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  email      String   @unique
+}
+
+model plan_subscriptions {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  email      String   @unique
+  plan       String
+  is_active  Boolean  @default(true)
 }

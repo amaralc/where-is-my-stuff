@@ -1,6 +1,7 @@
 # Persistence
 persistence-setup:
-	cp .env.example ./apps/persistence/.env \
+	cp .env.example .env \
+	&& cp .env.example ./apps/persistence/.env \
 	&& cd apps/persistence && docker-compose up -d && echo 'Finish setting up containers...' && sleep 2
 
 persistence-cleanup:
@@ -35,6 +36,10 @@ docker-config:
 # Application
 auth-prisma-postgresql-setup:
 	yarn prisma generate --schema prisma/postgresql.schema.prisma
+
+# Application
+auth-prisma-mongodb-setup:
+	yarn prisma generate --schema prisma/mongodb.schema.prisma
 
 auth-api-serve:
   # The .env in root folder make it possible to use env variables within .env file

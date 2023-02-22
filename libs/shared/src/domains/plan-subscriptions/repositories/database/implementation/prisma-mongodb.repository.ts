@@ -1,16 +1,18 @@
 // users.repository.ts
 import { ConflictException, Injectable } from '@nestjs/common';
-import { PrismaService } from '../../../../../infra/storage/prisma/prisma.service';
+import { PrismaDatabaseMongoDbService } from '../../../../../infra/database/prisma/implementations/prisma-mongodb.service';
 import { CreatePlanSubscriptionDto } from '../../../dto/create-plan-subscription.dto';
 import { PlanSubscription } from '../../../entities/plan-subscription.entity';
 import { PLAN_SUBSCRIPTIONS_ERROR_MESSAGES } from '../../../errors/error-messages';
 import { PlanSubscriptionsDatabaseRepository } from '../database.repository';
 
 @Injectable()
-export class PrismaPlanSubscriptionsDatabaseRepository
+export class PrismaMongoDbPlanSubscriptionsDatabaseRepository
   implements PlanSubscriptionsDatabaseRepository
 {
-  constructor(private prismaService: PrismaService) {}
+  constructor(
+    private prismaDatabaseMongoDbService: PrismaDatabaseMongoDbService
+  ) {}
 
   async create(
     createPlanSubscriptionDto: CreatePlanSubscriptionDto
@@ -24,7 +26,7 @@ export class PrismaPlanSubscriptionsDatabaseRepository
     }
 
     const prismaPlanSubscription =
-      await this.prismaService.plan_subscriptions.create({
+      await this.prismaDatabaseMongoDbService.plan_subscriptions.create({
         data: { is_active: true, email, plan },
       });
 
@@ -39,7 +41,7 @@ export class PrismaPlanSubscriptionsDatabaseRepository
 
   async findByEmail(email: string): Promise<PlanSubscription | null> {
     const prismaPlanSubscription =
-      await this.prismaService.plan_subscriptions.findFirst({
+      await this.prismaDatabaseMongoDbService.plan_subscriptions.findFirst({
         where: {
           email,
         },
@@ -59,7 +61,7 @@ export class PrismaPlanSubscriptionsDatabaseRepository
 
   async findAll() {
     const prismaPlanSubscriptions =
-      await this.prismaService.plan_subscriptions.findMany();
+      await this.prismaDatabaseMongoDbService.plan_subscriptions.findMany();
     const applicationPlanSubscriptions = prismaPlanSubscriptions.map(
       (subscription) =>
         new PlanSubscription({

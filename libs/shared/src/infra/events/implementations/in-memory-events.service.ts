@@ -22,7 +22,7 @@ export class InMemoryEventsService implements EventsService {
   messages: InMemoryMessages = {};
 
   async onModuleInit(): Promise<void> {
-    Logger.log('Initializing in memory events manager...');
+    Logger.log('Initializing in memory events manager...', className);
   }
 
   async publish(payload: ProducerRecord): Promise<void> {

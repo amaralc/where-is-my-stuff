@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { PrismaDatabaseMongoDbService } from './database/prisma/implementations/prisma-mongodb.service';
+import { PrismaDatabasePostgreSqlService } from './database/prisma/implementations/prisma-postgresql.service';
 import {
   EventsService,
   EventsServiceImplementation,
 } from './events/events.service';
-import { PrismaService } from './storage/prisma/prisma.service';
 
 @Module({
   imports: [
@@ -17,14 +18,16 @@ import { PrismaService } from './storage/prisma/prisma.service';
   ],
   controllers: [],
   providers: [
-    PrismaService,
+    PrismaDatabasePostgreSqlService,
+    PrismaDatabaseMongoDbService,
     {
       provide: EventsService,
       useClass: EventsServiceImplementation,
     },
   ],
   exports: [
-    PrismaService,
+    PrismaDatabasePostgreSqlService,
+    PrismaDatabaseMongoDbService,
     {
       provide: EventsService,
       useClass: EventsServiceImplementation,
