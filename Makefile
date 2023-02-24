@@ -1,19 +1,19 @@
 # Persistence
 persistence-setup:
 	cp .env.example .env \
-	&& cp .env.example ./apps/persistence/.env \
-	&& cd apps/persistence && docker-compose up -d && echo 'Finish setting up containers...' && sleep 2
+	&& cp .env.example ./apps/_persistence/.env \
+	&& cd apps/_persistence && docker-compose up -d && echo 'Finish setting up containers...' && sleep 2
 
 persistence-cleanup:
-	cd apps/persistence && docker-compose down
+	cd apps/_persistence && docker-compose down
 
 # Hasura (Dev Tool)
 hasura-console:
-	cd apps/persistence && cp .env ./hasura/.env && cd hasura && hasura console --envfile .env
+	cd apps/_persistence && cp .env ./hasura/.env && cd hasura && hasura console --envfile .env
 
 hasura-setup:
 	echo 'Setting up Hasura...' \
-	&& cd apps/persistence && cp .env ./hasura/.env \
+	&& cd apps/_persistence && cp .env ./hasura/.env \
 	&& cd hasura \
 	&& hasura metadata apply --envfile .env \
 	&& hasura migrate apply --envfile .env \
@@ -30,8 +30,8 @@ docker-prune:
 	&& docker system prune
 
 docker-config:
-	cp .env.example ./apps/persistence/.env \
-	&& cd apps/persistence && docker-compose config
+	cp .env.example ./apps/_persistence/.env \
+	&& cd apps/_persistence && docker-compose config
 
 # Application
 auth-prisma-postgresql-setup:
