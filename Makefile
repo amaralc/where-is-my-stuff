@@ -44,3 +44,7 @@ auth-api-only-serve:
 auth-consumer-with-api-serve:
   # The .env in root folder make it possible to use env variables within .env file
 	cp .env.example .env && make auth-prisma-postgresql-setup && nx serve auth-consumer-with-api
+
+auth-consumer-only-serve:
+  # The .env in root folder make it possible to use env variables within .env file
+	cp .env.example .env && make auth-prisma-postgresql-setup && nx serve auth-consumer-only
