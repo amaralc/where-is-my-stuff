@@ -11,7 +11,7 @@
     "release": "standard-version",
     "auth-api-only:setup": "make infra-setup",
     "auth-api-only:serve": "make auth-api-only-serve",
-    "auth-consumer:serve": "make auth-consumer-serve",
+    "auth-consumer-with-api:serve": "make auth-consumer-with-api-serve",
     "test:shared": "nx test shared"
   },
   "private": true,

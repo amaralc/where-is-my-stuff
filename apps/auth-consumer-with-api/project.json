@@ -1,7 +1,7 @@
 {
-  "name": "auth-consumer",
+  "name": "auth-consumer-with-api",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/auth-consumer/src",
+  "sourceRoot": "apps/auth-consumer-with-api/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -10,11 +10,11 @@
       "options": {
         "target": "node",
         "compiler": "tsc",
-        "outputPath": "dist/apps/auth-consumer",
-        "main": "apps/auth-consumer/src/main.ts",
-        "tsConfig": "apps/auth-consumer/tsconfig.app.json",
-        "assets": ["apps/auth-consumer/src/assets"],
-        "webpackConfig": "apps/auth-consumer/webpack.config.js"
+        "outputPath": "dist/apps/auth-consumer-with-api",
+        "main": "apps/auth-consumer-with-api/src/main.ts",
+        "tsConfig": "apps/auth-consumer-with-api/tsconfig.app.json",
+        "assets": ["apps/auth-consumer-with-api/src/assets"],
+        "webpackConfig": "apps/auth-consumer-with-api/webpack.config.js"
       },
       "configurations": {
         "production": {
@@ -27,11 +27,11 @@
     "serve": {
       "executor": "@nrwl/js:node",
       "options": {
-        "buildTarget": "auth-consumer:build"
+        "buildTarget": "auth-consumer-with-api:build"
       },
       "configurations": {
         "production": {
-          "buildTarget": "auth-consumer:build:production"
+          "buildTarget": "auth-consumer-with-api:build:production"
         }
       }
     },
@@ -39,14 +39,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/auth-consumer/**/*.ts"]
+        "lintFilePatterns": ["apps/auth-consumer-with-api/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/auth-consumer/jest.config.ts",
+        "jestConfig": "apps/auth-consumer-with-api/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
