@@ -9,8 +9,8 @@
     "prepare": "husky install",
     "pre-commit": "yarn test:shared",
     "release": "standard-version",
-    "auth-api:setup": "make infra-setup",
-    "auth-api:serve": "make auth-api-serve",
+    "auth-api-only:setup": "make infra-setup",
+    "auth-api-only:serve": "make auth-api-only-serve",
     "auth-consumer:serve": "make auth-consumer-serve",
     "test:shared": "nx test shared"
   },
